@@ -39,7 +39,10 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         run: |
-          docker build --platform linux/amd64 -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker build --platform linux/amd64 \
+            -f next.js-ecs/Dockerfile \
+            -t $ECR_REGISTRY/$ECR_REPOSITORY:latest \
+            ./next.js-ecs
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
 
       - name: Update ECS service to use new image
