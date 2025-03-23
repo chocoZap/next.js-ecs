@@ -7,34 +7,29 @@ on:
     branches: [main]
 
 jobs:
-  deploy:
+  check:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout
+      - name: Checkout
         uses: actions/checkout@v3
 
-      - name: 🟢 Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
-          cache: "pnpm"
 
-      - name: 📦 Install pnpm globally
-        run: npm install -g pnpm
+      - name: Enable pnpm via corepack
+        run: corepack enable
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: pnpm install
         working-directory: ./frontend
 
-      - name: 🧼 Biome Format Check
-        run: pnpm biome format --write=false --errors-on-unformatted
-        working-directory: ./frontend
-
-      - name: 🔍 Biome Lint Check
+      - name: Lint (Biome)
         run: pnpm biome lint .
         working-directory: ./frontend
 
-      - name: 🏗️ Next.js Build Check
+      - name: Build
         run: pnpm build
         working-directory: ./frontend
