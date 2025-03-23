@@ -11,13 +11,12 @@ resource "aws_ecs_task_definition" "hello" {
 
   container_definitions = jsonencode([
     {
-      name      = "hello"
-      image     = "nginxdemos/hello"
+      name      = "nextjs"
+      image     = "869533619891.dkr.ecr.ap-northeast-1.amazonaws.com/hello-ecs-next:latest"
       essential = true
       portMappings = [
         {
-          containerPort = 80
-          hostPort      = 80
+          containerPort = 3000
         }
       ]
       logConfiguration = {
@@ -45,8 +44,8 @@ resource "aws_security_group" "ecs" {
   vpc_id      = aws_vpc.main.id
 
   ingress {
-    from_port   = 80
-    to_port     = 80
+    from_port   = 3000
+    to_port     = 3000
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -93,4 +92,10 @@ resource "aws_iam_role" "ecs_task_execution_role" {
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_role_policy" {
   role       = aws_iam_role.ecs_task_execution_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
+}
+
+resource "aws_ecr_repository" "nextjs_app" {
+  name = "${var.project_name}-next"
+  image_tag_mutability = "MUTABLE"
+  force_delete = true
 }
