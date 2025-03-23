@@ -27,7 +27,11 @@ jobs:
         working-directory: ./frontend
 
       - name: Lint (Biome)
-        run: pnpm biome lint .
+        run: pnpm lint
+        working-directory: ./frontend
+
+      - name: Format (Biome)
+        run: pnpm format:check
         working-directory: ./frontend
 
       - name: Build
