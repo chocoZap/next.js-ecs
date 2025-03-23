@@ -18,18 +18,23 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 20
+          cache: "pnpm"
 
       - name: 📦 Install pnpm
         run: npm install -g pnpm
 
       - name: 📦 Install dependencies
         run: pnpm install
+        working-directory: ./frontend
 
       - name: 🧼 Biome Format Check
-        run: pnpm run format:check
+        run: pnpm biome format --write=false --errors-on-unformatted
+        working-directory: ./frontend
 
       - name: 🔍 Biome Lint Check
         run: pnpm biome lint .
+        working-directory: ./frontend
 
       - name: 🏗️ Next.js Build Check
         run: pnpm build
+        working-directory: ./frontend
