@@ -49,8 +49,8 @@ jobs:
       - name: 📦 Build and push Docker image with cache
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: docker/Dockerfile
+          context: ./frontend                    # ← プロジェクトのルートディレクトリに合わせる
+          file: ./frontend/docker/Dockerfile    # ← Dockerfileの実際のパス
           push: true
           tags: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
           cache-from: type=local,src=/tmp/.buildx-cache
