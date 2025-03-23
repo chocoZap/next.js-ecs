@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "format:check": "biome format --write=false --errors-on-unformatted",
+    "lint": "biome lint ."
   },
   "dependencies": {
     "react": "^19.0.0",
