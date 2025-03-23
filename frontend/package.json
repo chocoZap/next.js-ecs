@@ -1,11 +1,11 @@
 {
-  "name": "next.js-ecs",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "HOST=0.0.0.0 next start",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
